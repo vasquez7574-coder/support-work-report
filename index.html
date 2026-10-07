@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Marina Vasquez Support Work Report</title>
-
 <style>
-
 :root{
     --green:#25D366;
     --green-dark:#1fa855;
@@ -16,34 +12,28 @@
     --text:#2d3748;
     --border:#d8e3dc;
 }
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
-
 html{
     min-height:100%;
     overflow-y:scroll;
 }
-
 body{
     min-height:100vh;
     font-family:"Segoe UI", Arial, sans-serif;
     color:var(--text);
     padding:24px;
-
     background:
         radial-gradient(circle at top left,
         #f8fff9 0%,
         #eefaf1 25%,
         transparent 45%),
-
         radial-gradient(circle at bottom right,
         #daf1e1 0%,
         transparent 40%),
-
         linear-gradient(
         135deg,
         #f7fcf8 0%,
@@ -51,55 +41,40 @@ body{
         #e2f2e7 70%,
         #d8ebde 100%
         );
-
     overflow-y:auto;
 }
-
 /* Card */
-
 .form-container{
     max-width:720px;
     margin:0 auto;
-
     background:rgba(255,255,255,0.96);
-
     backdrop-filter:blur(10px);
-
     border:1px solid rgba(255,255,255,0.6);
-
     border-radius:18px;
-
     padding:28px;
-
     box-shadow:
         0 10px 30px rgba(0,0,0,0.08),
         0 2px 8px rgba(0,0,0,0.04);
 }
-
 /* Header */
-
 .header{
     text-align:center;
     margin-bottom:24px;
     padding-bottom:16px;
     border-bottom:1px solid #e8ece9;
 }
-
 .header h1{
     font-size:1.35rem;
     font-weight:700;
     color:#1e2d23;
     letter-spacing:0.3px;
 }
-
 .header p{
     margin-top:6px;
     font-size:0.90rem;
     color:#66706b;
 }
-
 /* Labels */
-
 label{
     display:block;
     margin:16px 0 6px;
@@ -107,9 +82,7 @@ label{
     font-weight:600;
     color:#374151;
 }
-
 /* Inputs */
-
 input,
 select,
 textarea{
@@ -119,349 +92,263 @@ textarea{
     padding:12px 14px;
     font-size:15px;
     color:#333;
-
     background:#fff;
-
     transition:
         border-color .2s ease,
         box-shadow .2s ease,
         transform .1s ease;
 }
-
 input,
 select{
     height:46px;
 }
-
 textarea{
     min-height:150px;
     resize:vertical;
 }
-
 input:focus,
 select:focus,
 textarea:focus{
     outline:none;
-
     border-color:var(--green);
-
     box-shadow:
         0 0 0 4px rgba(37,211,102,0.15);
 }
-
 /* Signature */
-
 .signature-box{
     margin-top:8px;
 }
-
 canvas{
     width:100%;
     height:190px;
     background:#fff;
-
     border:1px solid var(--border);
     border-radius:12px;
-
     touch-action:none;
 }
-
 /* Buttons */
-
 .button-row{
     display:flex;
     gap:12px;
     margin-top:22px;
 }
-
 button{
     flex:1;
-
     border:none;
     border-radius:10px;
-
     padding:13px;
-
     font-size:15px;
     font-weight:600;
-
     cursor:pointer;
-
     transition:
         transform .15s ease,
         box-shadow .2s ease;
 }
-
 button:hover{
     transform:translateY(-1px);
 }
-
 button:active{
     transform:translateY(1px);
 }
-
 .button-secondary{
     background:#6b7280;
     color:#fff;
-
     box-shadow:
         0 4px 10px rgba(107,114,128,.2);
 }
-
 .button-primary{
     color:#fff;
-
     background:linear-gradient(
         135deg,
         #28d867,
         #1fa855
     );
-
     box-shadow:
         0 6px 16px rgba(37,211,102,.30);
 }
-
 /* Footer Note */
-
 .footer-note{
     margin-top:18px;
     text-align:center;
     font-size:.80rem;
     color:#7a7f85;
 }
-
 /* Mobile */
-
 @media (max-width:600px){
-
     body{
         padding:14px;
     }
-
     .form-container{
         padding:20px;
     }
-
     .button-row{
         flex-direction:column;
     }
-
     .header h1{
         font-size:1.2rem;
     }
 }
-
 </style>
-
 </head>
-
 <body>
-
 <div class="form-container">
-
     <div class="header">
         <h1>Support Work Report</h1>
         <p>Marina Vasquez • ABN 52760431380</p>
     </div>
-
     <label for="client">Client Name *</label>
-
     <select id="client">
         <option value="">Select Client</option>
         <option value="Mercedes Vasquez">
             Mercedes Vasquez
         </option>
     </select>
-
     <label for="visitdate">
         Date Visited *
     </label>
-
     <input
         id="visitdate"
         type="date">
-
     <label for="duration">
         Duration of Visit (Hours) *
     </label>
-
     <input
         id="duration"
         type="number"
         step="0.25"
         min="0.25">
-
     <label for="notes">
         Support Notes *
     </label>
-
     <textarea
         id="notes"
         placeholder="Enter support activities, observations and outcomes..."></textarea>
-
     <label>
         Client Signature *
     </label>
-
     <div class="signature-box">
         <canvas id="sig"></canvas>
     </div>
-
     <div class="button-row">
-
         <button
             type="button"
             class="button-secondary"
             onclick="clearSig()">
             Clear Signature
         </button>
-
         <button
             type="button"
             class="button-primary"
             onclick="sendWA()">
             Send to WhatsApp
         </button>
-
     </div>
-
     <div class="footer-note">
         Support documentation submitted securely via WhatsApp.
     </div>
-
 </div>
-
 <script>
-
+const SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbxsgsMrrgBllnm1RwntDsUtT8htrFzRnWtmuHdbO42CtQfAHql5WJonZIVZamq-m6ZT/exec";
 document.getElementById("visitdate").value =
     new Date().toISOString().split("T")[0];
-
 const canvas =
     document.getElementById("sig");
-
 const ctx =
     canvas.getContext("2d");
-
 canvas.width =
     canvas.offsetWidth;
-
 canvas.height = 190;
-
 ctx.lineWidth = 2.5;
 ctx.lineCap = "round";
 ctx.strokeStyle = "#000";
-
 let drawing = false;
 let signed = false;
-
 function getPos(e){
-
     const rect =
         canvas.getBoundingClientRect();
-
     const touch =
         e.touches
         ? e.touches[0]
         : e;
-
     return{
         x:touch.clientX - rect.left,
         y:touch.clientY - rect.top
     };
 }
-
 function startDraw(e){
-
     drawing = true;
-
     const p = getPos(e);
-
     ctx.beginPath();
     ctx.moveTo(p.x,p.y);
 }
-
 function draw(e){
-
     if(!drawing) return;
-
     e.preventDefault();
-
     signed = true;
-
     const p = getPos(e);
-
     ctx.lineTo(p.x,p.y);
     ctx.stroke();
 }
-
 function stopDraw(){
-
     drawing = false;
 }
-
-canvas.addEventListener(
-    "mousedown",
-    startDraw
-);
-
-canvas.addEventListener(
-    "mousemove",
-    draw
-);
-
-canvas.addEventListener(
-    "mouseup",
-    stopDraw
-);
-
-canvas.addEventListener(
-    "mouseleave",
-    stopDraw
-);
-
-canvas.addEventListener(
-    "touchstart",
-    startDraw
-);
-
-canvas.addEventListener(
-    "touchmove",
-    draw
-);
-
-canvas.addEventListener(
-    "touchend",
-    stopDraw
-);
-
+canvas.addEventListener("mousedown", startDraw);
+canvas.addEventListener("mousemove", draw);
+canvas.addEventListener("mouseup", stopDraw);
+canvas.addEventListener("mouseleave", stopDraw);
+canvas.addEventListener("touchstart", startDraw);
+canvas.addEventListener("touchmove", draw);
+canvas.addEventListener("touchend", stopDraw);
 function clearSig(){
-
     ctx.clearRect(
         0,
         0,
         canvas.width,
         canvas.height
     );
-
     signed = false;
 }
-
-function sendWA(){
-
+async function saveToDatabase(message){
+    const payload = {
+        client: client.value,
+        visitdate: visitdate.value,
+        duration: duration.value,
+        notes: notes.value,
+        message: message
+    };
+    const response = await fetch(
+        SCRIPT_URL,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        }
+    );
+    const text = await response.text();
+    try {
+        return JSON.parse(text);
+    } catch(err) {
+        console.log(text);
+        return {
+            success: true
+        };
+    }
+}
+async function sendWA(){
     let errors = [];
-
     if(!client.value){
         errors.push(
             "Client Name is required."
         );
     }
-
     if(!visitdate.value){
         errors.push(
             "Date Visited is required."
         );
     }
-
     if(
         !duration.value ||
         Number(duration.value) <= 0
@@ -470,76 +357,75 @@ function sendWA(){
             "Duration of Visit is required."
         );
     }
-
     if(!notes.value.trim()){
         errors.push(
             "Support Notes are required."
         );
     }
-
     if(!signed){
         errors.push(
             "Client Signature is required."
         );
     }
-
     if(errors.length){
-
         alert(
             "Please complete the following before submitting:\n\n" +
             errors.join("\n")
         );
-
         return;
     }
-
     const msg =
 `MARINA VASQUEZ ABN 52760431380
-
 SUPPORT WORK REPORT
-
 Client Name: ${client.value}
-
 Date Visited: ${visitdate.value}
-
 Duration: ${duration.value} hours
-
 Support Notes:
 ${notes.value}
-
 Client Signature: Obtained`;
-
-    window.location.href =
+    const waUrl =
         "https://wa.me/61428603986?text=" +
         encodeURIComponent(msg);
+    try {
+        await saveToDatabase(msg);
+        window.location.href = waUrl;
+    } catch(error){
+        console.error(error);
+        if(
+            confirm(
+                "Unable to save to Google Sheets.\n\nOpen WhatsApp anyway?"
+            )
+        ){
+            window.location.href = waUrl;
+        }
+    }
 }
-
 window.addEventListener(
     "resize",
     () => {
-
-        const imageData =
-            ctx.getImageData(
+        try {
+            const imageData =
+                ctx.getImageData(
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
+            canvas.width =
+                canvas.offsetWidth;
+            canvas.height = 190;
+            ctx.putImageData(
+                imageData,
                 0,
-                0,
-                canvas.width,
-                canvas.height
+                0
             );
-
-        canvas.width =
-            canvas.offsetWidth;
-
-        canvas.height = 190;
-
-        ctx.putImageData(
-            imageData,
-            0,
-            0
-        );
+        } catch(err){
+            canvas.width =
+                canvas.offsetWidth;
+            canvas.height = 190;
+        }
     }
 );
-
 </script>
-
 </body>
-</html>
+        </html>

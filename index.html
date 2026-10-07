@@ -1,1 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marina Vasquez Support Work Report</title>
 
+<style>
+body{
+    font-family: Arial, sans-serif;
+    max-width:700px;
+    margin:20px auto;
+    padding:15px;
+    color:#333;
+}
+
+h2{
+    text-align:center;
+}
+
+label{
+    font-weight:bold;
+    display:block;
+    margin-top:12px;
+}
+
+input,
+select,
+textarea,
+button{
+    width:100%;
+    padding:10px;
+    box-sizing:border-box;
+    font-size:16px;
+}
+
+input,
+select{
+    height:42px;
+}
+
+textarea{
+    height:140px;
+}
+
+canvas{
+    border:1px solid #ccc;
+    width:100%;
+    height:180px;
+    touch-action:none;
+    background:#fff;
+}
+
+button{
+    margin-top:12px;
+    background:#25D366;
+    color:white;
+    border:none;
+    border-radius:4px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.button-secondary{
+    background:#666;
+}
+</style>
+
+</head>
+<body>
+
+<h2>
+Marina Vasquez ABN 52760431380
+<br>
+Support Work Report
+</h2>
+
+<label>Client Name *</label>
+<select id="client">
+    <option value="">- Select -</option>
+    <option value="Mercedes Vasquez">Mercedes Vasquez</option>
+</select>
+
+<label>Date Visited *</label>
+<input id="visitdate" type="date">
+
+<label>Duration of Visit (Hours) *</label>
+<input id="duration" type="number" step="0.25" min="0.25">
+
+<label>Support Notes *</label>
+<textarea id="notes"></textarea>
+
+<label>Client Signature *</label>
+<canvas id="sig"></canvas>
+
+<button
+    type="button"
+    class="button-secondary"
+    onclick="clearSig()">
+    Clear Signature
+</button>
+
+<button
+    type="button"
+    onclick="sendWA()">
+    Send to WhatsApp
+</button>
+
+<script>
+
+document.getElementById("visitdate").value =
+new Date().toISOString().split("T")[0];
+
+const canvas = document.getElementById("sig");
+const ctx = canvas.getContext("2d");
+
+canvas.width = canvas.offsetWidth;
+canvas.height = 180;
+
+let drawing = false;
+let signed = false;
+
+function getPos(e){
+
+    const rect = canvas.getBoundingClientRect();
+
+    const touch = e.touches
+        ? e.touches[0]
+        : e;
+
+    return {
+        x: touch.clientX - rect.left,
+        y: touch.clientY - rect.top
+    };
+}
+
+function startDraw(e){
+
+    drawing = true;
+
+    const p = getPos(e);
+
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+}
+
+function draw(e){
+
+    if(!drawing) return;
+
+    e.preventDefault();
+
+    signed = true;
+
+    const p = getPos(e);
+
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+}
+
+function stopDraw(){
+    drawing = false;
+}
+
+canvas.addEventListener("mousedown", startDraw);
+canvas.addEventListener("mousemove", draw);
+canvas.addEventListener("mouseup", stopDraw);
+
+canvas.addEventListener("touchstart", startDraw);
+canvas.addEventListener("touchmove", draw);
+canvas.addEventListener("touchend", stopDraw);
+
+function clearSig(){
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    signed = false;
+}
+
+function sendWA(){
+
+    let errors = [];
+
+    if(!client.value){
+        errors.push(
+            "Client Name is required."
+        );
+    }
+
+    if(!visitdate.value){
+        errors.push(
+            "Date Visited is required."
+        );
+    }
+
+    if(
+        !duration.value ||
+        Number(duration.value) <= 0
+    ){
+        errors.push(
+            "Duration of Visit is required."
+        );
+    }
+
+    if(!notes.value.trim()){
+        errors.push(
+            "Support Notes are required."
+        );
+    }
+
+    if(!signed){
+        errors.push(
+            "Client Signature is required."
+        );
+    }
+
+    if(errors.length > 0){
+
+        alert(
+            "Please complete the following before submitting:\n\n" +
+            errors.join("\n")
+        );
+
+        return;
+    }
+
+    const msg =
+`MARINA VASQUEZ ABN 52760431380
+
+SUPPORT WORK REPORT
+
+Client Name: ${client.value}
+
+Date Visited: ${visitdate.value}
+
+Duration: ${duration.value} hours
+
+Support Notes:
+${notes.value}
+
+Client Signature: Obtained`;
+
+    window.location.href =
+        "https://wa.me/61428603986?text=" +
+        encodeURIComponent(msg);
+}
+
+</script>
+
+</body>
+</html>

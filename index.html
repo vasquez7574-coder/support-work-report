@@ -1,120 +1,210 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Marina Vasquez Support Work Report</title>
 
 <style>
-body{
-    font-family: Arial, sans-serif;
-    max-width:700px;
-    margin:20px auto;
-    padding:15px;
-    color:#333;
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-h2{
+body{
+    font-family:"Segoe UI", Arial, sans-serif;
+    background:#f5f7fa;
+    color:#333;
+    padding:20px;
+}
+
+.form-container{
+    max-width:700px;
+    margin:0 auto;
+    background:#fff;
+    border-radius:12px;
+    padding:24px;
+    box-shadow:0 2px 12px rgba(0,0,0,0.08);
+}
+
+.header{
     text-align:center;
+    border-bottom:1px solid #e5e5e5;
+    padding-bottom:12px;
+    margin-bottom:20px;
+}
+
+.header h1{
+    font-size:1.2rem;
+    font-weight:600;
+    color:#222;
+    margin-bottom:4px;
+}
+
+.header p{
+    font-size:0.85rem;
+    color:#666;
 }
 
 label{
-    font-weight:bold;
     display:block;
-    margin-top:12px;
+    margin:14px 0 6px;
+    font-weight:600;
+    color:#444;
 }
 
 input,
 select,
-textarea,
-button{
+textarea{
     width:100%;
-    padding:10px;
-    box-sizing:border-box;
-    font-size:16px;
+    padding:10px 12px;
+    font-size:15px;
+    border:1px solid #d0d7de;
+    border-radius:8px;
+    background:#fff;
+    transition:all 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    outline:none;
+    border-color:#25D366;
+    box-shadow:0 0 0 3px rgba(37,211,102,0.15);
 }
 
 input,
 select{
-    height:42px;
+    height:44px;
 }
 
 textarea{
-    height:140px;
+    min-height:140px;
+    resize:vertical;
 }
 
 canvas{
-    border:1px solid #ccc;
     width:100%;
     height:180px;
-    touch-action:none;
+    border:1px solid #d0d7de;
+    border-radius:8px;
     background:#fff;
+    touch-action:none;
+}
+
+.button-row{
+    display:flex;
+    gap:10px;
+    margin-top:18px;
 }
 
 button{
-    margin-top:12px;
-    background:#25D366;
-    color:white;
+    flex:1;
+    padding:12px;
     border:none;
-    border-radius:4px;
-    font-size:16px;
+    border-radius:8px;
+    font-size:15px;
+    font-weight:600;
     cursor:pointer;
+    transition:0.2s;
+}
+
+button:hover{
+    opacity:0.95;
 }
 
 .button-secondary{
-    background:#666;
+    background:#6c757d;
+    color:#fff;
 }
+
+.button-primary{
+    background:#25D366;
+    color:#fff;
+}
+
+@media (max-width: 600px){
+
+    .form-container{
+        padding:18px;
+    }
+
+    .button-row{
+        flex-direction:column;
+    }
+
+}
+
 </style>
 
 </head>
 <body>
 
-<h2>
-Marina Vasquez ABN 52760431380
-<br>
-Support Work Report
-</h2>
+<div class="form-container">
 
-<label>Client Name *</label>
-<select id="client">
-    <option value="">- Select -</option>
-    <option value="Mercedes Vasquez">Mercedes Vasquez</option>
-</select>
+    <div class="header">
+        <h1>Support Work Report</h1>
+        <p>Marina Vasquez • ABN 52760431380</p>
+    </div>
 
-<label>Date Visited *</label>
-<input id="visitdate" type="date">
+    <label for="client">Client Name *</label>
+    <select id="client">
+        <option value="">- Select -</option>
+        <option value="Mercedes Vasquez">Mercedes Vasquez</option>
+    </select>
 
-<label>Duration of Visit (Hours) *</label>
-<input id="duration" type="number" step="0.25" min="0.25">
+    <label for="visitdate">Date Visited *</label>
+    <input id="visitdate" type="date">
 
-<label>Support Notes *</label>
-<textarea id="notes"></textarea>
+    <label for="duration">Duration of Visit (Hours) *</label>
+    <input
+        id="duration"
+        type="number"
+        step="0.25"
+        min="0.25">
 
-<label>Client Signature *</label>
-<canvas id="sig"></canvas>
+    <label for="notes">Support Notes *</label>
+    <textarea id="notes"></textarea>
 
-<button
-    type="button"
-    class="button-secondary"
-    onclick="clearSig()">
-    Clear Signature
-</button>
+    <label>Client Signature *</label>
+    <canvas id="sig"></canvas>
 
-<button
-    type="button"
-    onclick="sendWA()">
-    Send to WhatsApp
-</button>
+    <div class="button-row">
+
+        <button
+            type="button"
+            class="button-secondary"
+            onclick="clearSig()">
+            Clear Signature
+        </button>
+
+        <button
+            type="button"
+            class="button-primary"
+            onclick="sendWA()">
+            Send to WhatsApp
+        </button>
+
+    </div>
+
+</div>
 
 <script>
 
 document.getElementById("visitdate").value =
-new Date().toISOString().split("T")[0];
+    new Date().toISOString().split("T")[0];
 
 const canvas = document.getElementById("sig");
 const ctx = canvas.getContext("2d");
 
 canvas.width = canvas.offsetWidth;
 canvas.height = 180;
+
+ctx.lineWidth = 2;
+ctx.lineCap = "round";
+ctx.strokeStyle = "#000";
 
 let drawing = false;
 let signed = false;
@@ -131,6 +221,7 @@ function getPos(e){
         x: touch.clientX - rect.left,
         y: touch.clientY - rect.top
     };
+
 }
 
 function startDraw(e){
@@ -141,6 +232,7 @@ function startDraw(e){
 
     ctx.beginPath();
     ctx.moveTo(p.x, p.y);
+
 }
 
 function draw(e){
@@ -155,15 +247,19 @@ function draw(e){
 
     ctx.lineTo(p.x, p.y);
     ctx.stroke();
+
 }
 
 function stopDraw(){
+
     drawing = false;
+
 }
 
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mousemove", draw);
 canvas.addEventListener("mouseup", stopDraw);
+canvas.addEventListener("mouseleave", stopDraw);
 
 canvas.addEventListener("touchstart", startDraw);
 canvas.addEventListener("touchmove", draw);
@@ -179,6 +275,7 @@ function clearSig(){
     );
 
     signed = false;
+
 }
 
 function sendWA(){
@@ -186,15 +283,11 @@ function sendWA(){
     let errors = [];
 
     if(!client.value){
-        errors.push(
-            "Client Name is required."
-        );
+        errors.push("Client Name is required.");
     }
 
     if(!visitdate.value){
-        errors.push(
-            "Date Visited is required."
-        );
+        errors.push("Date Visited is required.");
     }
 
     if(
@@ -226,6 +319,7 @@ function sendWA(){
         );
 
         return;
+
     }
 
     const msg =
@@ -247,7 +341,24 @@ Client Signature: Obtained`;
     window.location.href =
         "https://wa.me/61428603986?text=" +
         encodeURIComponent(msg);
+
 }
+
+window.addEventListener("resize", () => {
+
+    const imageData = ctx.getImageData(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    canvas.width = canvas.offsetWidth;
+    canvas.height = 180;
+
+    ctx.putImageData(imageData, 0, 0);
+
+});
 
 </script>
 

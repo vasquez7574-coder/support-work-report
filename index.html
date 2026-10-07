@@ -309,34 +309,33 @@ function clearSig(){
     );
     signed = false;
 }
+    
 async function saveToDatabase(message){
+
     const payload = {
+
         client: client.value,
         visitdate: visitdate.value,
         duration: duration.value,
         notes: notes.value,
         message: message
+
     };
-    const response = await fetch(
+
+    await fetch(
         SCRIPT_URL,
         {
             method: "POST",
+            mode: "no-cors",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type":"text/plain"
             },
             body: JSON.stringify(payload)
         }
     );
-    const text = await response.text();
-    try {
-        return JSON.parse(text);
-    } catch(err) {
-        console.log(text);
-        return {
-            success: true
-        };
-    }
+
 }
+
 async function sendWA(){
     let errors = [];
     if(!client.value){

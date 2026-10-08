@@ -250,8 +250,12 @@ button:active{
 <script>
 const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbxsgsMrrgBllnm1RwntDsUtT8htrFzRnWtmuHdbO42CtQfAHql5WJonZIVZamq-m6ZT/exec";
+
 document.getElementById("visitdate").value =
-    new Date().toISOString().split("T")[0];
+  new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+    .toISOString()
+    .split("T")[0];
+
 const canvas =
     document.getElementById("sig");
 const ctx =
